@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      name: api
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: pcmotta/api-produto:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          env:
+            - name: Mongo__Host
+              value: mongo
+            - name: Mongo__User
+              value: mongodbuser
+            - name: Mongo__Password
+              value: mongodbpwd
+            - name: Mongo__Port
+              value: "27017"
+            - name: Mongo_DataBase
+              value: admin
+      restartPolicy: Always
