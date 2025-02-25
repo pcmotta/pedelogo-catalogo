@@ -20,9 +20,10 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
-                    docker.push('latest')
-                    docker.push('${env.BUILD_ID}')
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        docker.push('latest')
+                        docker.push('${env.BUILD_ID}')
+                    }
                 }
             }
         }
